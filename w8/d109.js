@@ -11,31 +11,23 @@ reader.on('line', (line) => {
   lines.push(line);
 });
 reader.on('close', () => {
-  const dayArray = lines[0].split(" ");
-  let results_array = [];
+  // とりあえず1文字ずつ配列化する
+  const dayArray = lines[0].split("");
+
+  // 出力結果をデフォルト値Yesで定義
+  let answer = 'Yes';
   
+  // 配列の数分ループ回す（[11 1] なら ["1", "1", " ", "1"] で4回転)
   for (var i = 0; i < dayArray.length; i++) {
-      dayArray[i]
-      if(dayArray[i].length == 2){
-          const splited_number = dayArray[i].split('');
-          results_array.push(splited_number[0]);
-          results_array.push(splited_number[1]);
-      } else {
-          results_array.push(dayArray[i])
+      // 配列の1つ目とそれ以降の値を比較する
+      if(dayArray[i] !== ' ' && dayArray[0] !== dayArray[i]){
+          // 1つでも違う値が入ってたら出力結果をNoに代入し、ループを停止
+　　　　　　// ただし" "の場合はスルー
+          answer = 'No';
+          break;
       }
   }
-  
-  let flug = true;
-  for (var i = 0; i < results_array.length - 1; i++) {
-      if(results_array[i] !== results_array[i+1]){
-          flug = false;
-      }
-  }
-  
-  if(flug){
-    console.log('Yes');
-  } else {
-    console.log('No');
-  }
-  
+
+  //出力
+  console.log(answer);
 });
